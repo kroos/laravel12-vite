@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////
 const { routes, old, now } = window.PAGE;
-console.log(moment(now).add(2, 'days').format('YYYY-MM-DD'));
+// console.log(moment(now).add(2, 'days').format('YYYY-MM-DD'));
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 // tooltip
@@ -107,7 +107,6 @@ let calendar = new Calendar(calendarEl, {
 		// 	url: '{{ route('dashboard') }}',
 		// 	method: 'GET',
 		// 	extraParams: {
-			// 		_token: '{!! csrf_token() !!}',
 			// 	},
 	// },
 

@@ -253,9 +253,7 @@
 </div>
 @endsection
 
-@section('page-data')
-<script>
-
+@section('data')
 	<?php
 	$items = @$variable
 					?->hasmanyModel()
@@ -299,5 +297,4 @@ $itemsB = @$variable?->hasmanyModel()?->get(['column'])?->toArray() ?? [];
 		},
 		now: "{{ now()->toIso8601String() }}"
 	};
-</script>
 @endsection

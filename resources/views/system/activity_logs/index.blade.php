@@ -11,13 +11,11 @@
 </div>
 @endsection
 
-@section('page-data')
-<script>
+@section('data')
 	window.PAGE = {
 		routes: {
 			getActivityLogs: "{{ route('getActivityLogs') }}",
 			activityLogs: "{{ url('activity-logs') }}",
 		}
 	};
-</script>
 @endsection
