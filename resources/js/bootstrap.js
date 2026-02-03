@@ -1,12 +1,41 @@
-// load axios
-// import axios from 'axios';
-// window.axios = axios;
-// window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+// routing js
+import { loadModule } from './moduleLoader';
 
+$(async function () {
 
-// Then load Alpine
-// import Alpine from 'alpinejs';
-// document.addEventListener("DOMContentLoaded", () => {
-// 	window.Alpine = Alpine;
-// 	Alpine.start();
-// });
+	/* ================================
+	 * 1️⃣ CSRF HEADER (GLOBAL, ONCE)
+	 * ================================ */
+	const token = document
+	.querySelector('meta[name="csrf-token"]')
+	?.getAttribute('content');
+
+	if (!token) {
+		console.error(
+		              'CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token'
+		              );
+		return;
+	}
+
+	$.ajaxSetup({
+		headers: {
+			'X-CSRF-TOKEN': token
+		}
+	});
+
+	/* ================================
+	 * 2️⃣ SANCTUM COOKIE (ONCE)
+	 * ================================ */
+	try {
+		await $.get('/sanctum/csrf-cookie');
+	} catch (e) {
+		console.warn('Sanctum CSRF cookie failed');
+	}
+
+	/* ================================
+	 * 3️⃣ AUTO LOAD ROUTE JS
+	 * ================================ */
+	const route = document.body.dataset.route;
+	await loadModule(route);
+
+});

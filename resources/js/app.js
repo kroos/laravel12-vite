@@ -49,9 +49,6 @@ import './fullcalendar';
 // bootstrap validator 5
 import	'bootstrapValidator5';
 
-// bootstrap
-import	'./bootstrap';
-
 // addRemoveRow
 import	'addremrow-validator5-swal2-ajax';
 // import	'addremrow';
@@ -60,60 +57,5 @@ import	'addremrow-validator5-swal2-ajax';
 import	'./dataTable-any-number.js';
 import	'./dataTable-moment.js';
 
-/////////////////////////////////////////////////////////////////////
-// routing js
-import { loadModule } from './moduleLoader';
-/////////////////////////////////////////////////////////////////////
-// jQuery.noConflict();
-
-$(async function () {
-
-	/* ================================
-	 * 1️⃣ CSRF HEADER (GLOBAL, ONCE)
-	 * ================================ */
-	const token = document
-	.querySelector('meta[name="csrf-token"]')
-	?.getAttribute('content');
-
-	if (!token) {
-		console.error(
-		              'CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token'
-		              );
-		return;
-	}
-
-	$.ajaxSetup({
-		headers: {
-			'X-CSRF-TOKEN': token
-		}
-	});
-
-	/* ================================
-	 * 2️⃣ SANCTUM COOKIE (ONCE)
-	 * ================================ */
-	try {
-		await $.get('/sanctum/csrf-cookie');
-	} catch (e) {
-		console.warn('Sanctum CSRF cookie failed');
-	}
-
-	/* ================================
-	 * 3️⃣ AUTO LOAD ROUTE JS
-	 * ================================ */
-	// const route = document.body.dataset.route;
-	// console.log('route:', route);
-	// if (!route) return;
-
-	// try {
-	// 	const module = await import(`./routes/${route}.js`);
-	// 	if (module.default) {
-	// 		module.default();
-	// 	}
-	// } catch (e) {
-	// 	console.warn(`No JS module for route: ${route}`);
-	// }
-
-	const route = document.body.dataset.route;
-	await loadModule(route);
-
-});
+// bootstrap
+import	'./bootstrap';
