@@ -21,11 +21,11 @@ $currentYear = Carbon::now()->year;
 	@vite(['resources/scss/app.scss', 'resources/css/app.css', 'resources/js/app.js'])
 
 	<!-- Bootswatch Cerulean CSS -->
-	<link href="{{ URL::asset('css/bootstrap.css') }}" rel="stylesheet">
+	<link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
 	<!-- Livewire CSS -->
 
 </head>
-<body class="bg-primary-subtle bg-opacity-75 min-vh-100 d-flex flex-column" data-route="{{ request()->route()->getName() }}">
+<body class="bg-primary-subtle bg-opacity-75 min-vh-100 d-flex flex-column" data-route="{{ Route::currentRouteName() }}">
 
 	<!-- 1st nav -->
 	@include('layouts.navbar')

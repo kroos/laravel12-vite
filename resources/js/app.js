@@ -61,6 +61,9 @@ import	'./dataTable-any-number.js';
 import	'./dataTable-moment.js';
 
 /////////////////////////////////////////////////////////////////////
+// routing js
+import { loadModule } from './moduleLoader';
+/////////////////////////////////////////////////////////////////////
 // jQuery.noConflict();
 
 $(async function () {
@@ -97,16 +100,20 @@ $(async function () {
 	/* ================================
 	 * 3️⃣ AUTO LOAD ROUTE JS
 	 * ================================ */
-	const route = document.body.dataset.route;
-	console.log('route:', route);
-	if (!route) return;
+	// const route = document.body.dataset.route;
+	// console.log('route:', route);
+	// if (!route) return;
 
-	try {
-		const module = await import(`./routes/${route}.js`);
-		if (module.default) {
-			module.default();
-		}
-	} catch (e) {
-		console.warn(`No JS module for route: ${route}`);
-	}
+	// try {
+	// 	const module = await import(`./routes/${route}.js`);
+	// 	if (module.default) {
+	// 		module.default();
+	// 	}
+	// } catch (e) {
+	// 	console.warn(`No JS module for route: ${route}`);
+	// }
+
+	const route = document.body.dataset.route;
+	await loadModule(route);
+
 });
