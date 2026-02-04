@@ -1,53 +1,65 @@
-// Import all JS modules under modules folder
+// Import all modules lazily
 const modules = import.meta.glob('./modules/**/*.js');
 
-// Map create/edit to form.js automatically
 const ACTION_MAP = {
 	create: 'form',
 	edit: 'form'
 };
 
-/**
- * Load the JS module for a given Laravel route
- * @param {string} routeName - current route, e.g., "users.children.edit"
- */
+function generateCandidates(routeName) {
+
+	const parts = routeName.split('.');
+	const action = parts.pop();
+	const folderPath = parts.join('/');
+
+	const candidates = [];
+
+		// 1️⃣ ACTION_MAP candidate
+	if (ACTION_MAP[action]) {
+		const mapped = ACTION_MAP[action];
+
+		candidates.push(
+										folderPath
+										? `./modules/${folderPath}/${mapped}.js`
+										: `./modules/${mapped}.js`
+										);
+	}
+
+		// 2️⃣ Original action fallback
+	candidates.push(
+									folderPath
+									? `./modules/${folderPath}/${action}.js`
+									: `./modules/${action}.js`
+									);
+
+	return candidates;
+}
+
 export async function loadModule(routeName) {
 
 	if (!routeName) return;
 
 	try {
 
-		const parts = routeName.split('.');
-		const action = parts.pop(); // last segment
-		const folderPath = parts.join('/');
+		const candidates = generateCandidates(routeName);
 
-		const fileName = ACTION_MAP[action] || action;
+		const modulePath = candidates.find(p => modules[p]);
 
-		const modulePath = folderPath
-		? `./modules/${folderPath}/${fileName}.js`
-		: `./modules/${fileName}.js`;
-
-		const loader = modules[modulePath];
-
-		if (!loader) {
-			console.log(
-				`[ModuleLoader] JS module missing for route "${routeName}".\n` +
-				`Expected module at: ${modulePath}`
-			);
-			return; // fail-safe, do not throw
+		if (!modulePath) {
+			console.warn(
+		`[ModuleLoader] Missing module for route "${routeName}".\n` +
+	`Tried:\n${candidates.join('\n')}`
+	);
+			return;
 		}
 
-		const module = await loader();
+		const module = await modules[modulePath]();
 
 		if (module.default) {
-			module.default({
-				routeName,
-				action,
-				segments: parts
-			});
+			await module.default({ routeName });
 		}
 
 	} catch (error) {
-		console.error('[ModuleLoader] Failed to load module for route', routeName, error);
+		console.error('[ModuleLoader] Failed to load module', routeName, error);
 	}
 }
