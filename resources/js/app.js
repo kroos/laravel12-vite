@@ -59,3 +59,7 @@ import	'./dataTable-moment.js';
 
 // bootstrap
 import	'./bootstrap';
+
+// plugin variable
+import config from './config/plugins';
+window.config = config;

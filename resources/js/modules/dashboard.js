@@ -1,11 +1,7 @@
 const { routes, old } = window.PAGE;
 
 $('#opt').select2({
-	theme: 'bootstrap-5',
-	placeholder: 'Please choose',
-	allowClear: true,
-	closeOnSelect: true,
-	width: '100%',
+	...config.select2,
 	ajax: {
 		url: `${routes.getYesNoOptions}`,
 		type: 'GET',
