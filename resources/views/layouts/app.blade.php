@@ -67,7 +67,7 @@ $currentYear = Carbon::now()->year;
 	</div>
 
 	<!-- footer -->
-	<div class="container m-0 mx-auto py-1 align-self-end text-center text-sm text-light-emphasis">
+	<div class="container m-0 mx-auto py-1 text-center text-sm text-light-emphasis">
 		&copy; My Themes<br />Themes By Bootswatch<br />
 		Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
 	</div>
@@ -76,7 +76,7 @@ $currentYear = Carbon::now()->year;
 @vite(['resources/js/app.js'])
 	<script type="javascript" src="{{ asset('js/ckeditor/ckeditor.js') }}"></script>
 <script type="javascript" src="{{ asset('js/ckeditor/adapters/jquery.js') }}"></script>
-<script>
+<script type="module">
 {{-- ✅ Page data injection --}}
 	@yield('data')
 </script>

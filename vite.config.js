@@ -13,10 +13,10 @@ export default defineConfig({
 			refresh: true,
 		}),
 	],
-	define: {
-		jQuery: 'window.jQuery',
-		$: 'window.jQuery'
-	},
+	// define: {
+	// 	jQuery: 'window.jQuery',
+	// 	$: 'window.jQuery'
+	// },
 	build: {
 		chunkSizeWarningLimit: 4000,
 	},
