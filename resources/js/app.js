@@ -47,7 +47,7 @@ import  './chart';
 import './fullcalendar';
 
 // bootstrap validator 5
-import	'bootstrapValidator5';
+import	'bootstrapvalidator5';
 
 // addRemoveRow
 import	'addremrow-validator5-swal2-ajax';
