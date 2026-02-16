@@ -46,10 +46,10 @@ export async function loadModule(routeName) {
 		const modulePath = candidates.find(p => modules[p]);
 
 		if (!modulePath) {
-			console.warn(
-		`[ModuleLoader] Missing module for route "${routeName}".\n` +
-	`Tried:\n${candidates.join('\n')}`
-	);
+			console.log(
+				`[ModuleLoader] Missing module for route "${routeName}".\n` +
+			`Tried:\n${candidates.join('\n')}`
+			);
 			return;
 		}
 

@@ -1,4 +1,4 @@
-const { routes, old } = window.PAGE;
+const { routes, old } = window.data;
 
 $('#opt').select2({
 	...config.select2,

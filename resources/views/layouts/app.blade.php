@@ -74,11 +74,9 @@ $currentYear = Carbon::now()->year;
 	<!-- footer end -->
 </body>
 @vite(['resources/js/app.js'])
-	<script src="{{ asset('js/ckeditor/ckeditor.js') }}"></script>
-<script src="{{ asset('js/ckeditor/adapters/jquery.js') }}"></script>
-<script type="module">
+<script>
 {{-- ✅ Page data injection --}}
-	@yield('data')
+	@yield('js')
 </script>
 </html>
 

@@ -1,4 +1,4 @@
-const { routes } = window.PAGE;
+const { routes } = window.data;
 
 var table = $('#logs-table').DataTable({
 	lengthMenu: [ [100, 200, 500, 1000], [100, 200, 500, 1000] ],

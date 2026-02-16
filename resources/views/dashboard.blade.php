@@ -40,8 +40,8 @@
 </div>
 @endsection
 
-@section('data')
-	window.PAGE = {
+@section('js')
+	window.data = {
 		routes: {
 			getYesNoOptions: "{{ route('getYesNoOptions') }}",
 		},

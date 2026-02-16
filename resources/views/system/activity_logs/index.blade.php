@@ -11,8 +11,8 @@
 </div>
 @endsection
 
-@section('data')
-	window.PAGE = {
+@section('js')
+	window.data = {
 		routes: {
 			getActivityLogs: "{{ route('getActivityLogs') }}",
 			activityLogs: "{{ url('activity-logs') }}",
