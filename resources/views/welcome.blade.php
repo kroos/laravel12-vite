@@ -89,6 +89,20 @@
 			</figure>
 		</div>
 
+		<div class="col-sm-12 row justify-content-center align-items-center my-1 m-0 border border-success">
+			<div class="form-group row col-sm-12 border border-primary m-1 @error('test') has-error @enderror">
+				<label for="editor" class="col-form-label col-sm-4">Textarea : </label>
+				<div class="col-sm-8 my-auto">
+					<textarea name="test" id="editor" class="form-control form-control-sm col-sm-12 @error('test') is-invalid @enderror" placeholder="Textarea">{{ old('test', @$variable->test) }}</textarea>
+					@error('test')
+					<div class="invalid-feedback">
+						{{ $message }}
+					</div>
+					@enderror
+				</div>
+			</div>
+		</div>
+
 		<div class="col-sm-12 row justify-content-center align-items-center my-2 m-0 border border-success">
 			<div class="col-sm-4 my-auto">
 				<button id="button1" class="m-1 btn btn-primary"><i class="fa-regular fa-user fa-beat"></i> Primary button</button>
