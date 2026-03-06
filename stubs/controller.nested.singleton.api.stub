@@ -1,6 +1,6 @@
 <?php
 namespace {{ namespace }};
-use {{ rootNamespace }}Http\Controllers\Controller;
+use App\Http\Controllers\Controller;
 
 // for controller output
 // use Illuminate\Http\JsonResponse;
@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\DB;
 
 
 // load validation
-use {{ namespacedRequests }}
+use {{ namespacedRequests }};
 use Illuminate\Support\Facades\Validator;
 
 // load batch and queue
