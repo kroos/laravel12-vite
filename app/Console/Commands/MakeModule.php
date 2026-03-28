@@ -41,22 +41,22 @@ class MakeModule extends Command
 			'--model' => $name
 		]);
 
-		$this->call('make:request', [
-			'name' => "{$this->className($name)}StoreRequest"
-		]);
+		// $this->call('make:request', [
+		// 	'name' => "Store{$this->className($name)}Request"
+		// ]);
 
-		$this->call('make:request', [
-			'name' => "{$this->className($name)}UpdateRequest"
-		]);
+		// $this->call('make:request', [
+		// 	'name' => "Update{$this->className($name)}Request"
+		// ]);
 
-		$this->call('make:policy', [
-			'name' => "{$this->className($name)}Policy",
-			'--model' => $name
-		]);
+		// $this->call('make:policy', [
+		// 	'name' => "{$this->className($name)}Policy",
+		// 	'--model' => $name
+		// ]);
 
-		$this->call('make:resource', [
-			'name' => "{$this->className($name)}Resource"
-		]);
+		// $this->call('make:resource', [
+		// 	'name' => "{$this->className($name)}Resource"
+		// ]);
 	}
 
 	protected function className($name)

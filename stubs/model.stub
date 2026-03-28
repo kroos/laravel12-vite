@@ -37,9 +37,9 @@ class {{ class }} extends Model
 	// const UPDATED_AT = '';
 	// protected $rememberTokenName = '';
 
-	// protected $casts = [
+	protected $casts = [
 	// 	'is_active' => 'boolean',
-	// ];
+	];
 
 	// public function sluggable(): array
 	// {
@@ -67,7 +67,7 @@ class {{ class }} extends Model
 	//     $this->attributes['ColumnName'] = ucwords(Str::lower($value));
 	// }
 
-	/////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
 	// relationship
 
 }

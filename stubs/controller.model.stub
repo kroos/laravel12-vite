@@ -58,7 +58,7 @@ class {{ class }} extends Controller
 	 */
 	public function index(): View
 	{
-		//
+		return view('folder.index');
 	}
 
 	/**
@@ -66,7 +66,7 @@ class {{ class }} extends Controller
 	 */
 	public function create(): View
 	{
-		//
+		return view('folder.create');
 	}
 
 	/**
@@ -74,7 +74,7 @@ class {{ class }} extends Controller
 	 */
 	public function store({{ storeRequest }} $request): RedirectResponse
 	{
-		//
+		return redirect()->route('folder.index')->with('success', 'Data Added');
 	}
 
 	/**
@@ -82,7 +82,7 @@ class {{ class }} extends Controller
 	 */
 	public function show({{ model }} ${{ modelVariable }}): View
 	{
-		//
+		return view('folder.show', ['var' => ${{ modelVariable }}]);
 	}
 
 	/**
@@ -90,7 +90,7 @@ class {{ class }} extends Controller
 	 */
 	public function edit({{ model }} ${{ modelVariable }}): View
 	{
-		//
+		return view('folder.edit', ['var' => ${{ modelVariable }}]);
 	}
 
 	/**
@@ -98,7 +98,7 @@ class {{ class }} extends Controller
 	 */
 	public function update({{ updateRequest }} $request, {{ model }} ${{ modelVariable }}): RedirectResponse
 	{
-		//
+		return redirect()->route('folder.index')->with('success', 'Data Updated');
 	}
 
 	/**
@@ -106,6 +106,10 @@ class {{ class }} extends Controller
 	 */
 	public function destroy({{ model }} ${{ modelVariable }}): JsonResponse
 	{
-		//
+		${{ modelVariable }}->delete();
+		return response()->json([
+			'status' => 'success',
+			'message' => 'Data Deleted',
+		]);
 	}
 }

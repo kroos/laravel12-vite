@@ -57,7 +57,7 @@ class {{ class }} extends Controller
 	 */
 	public function index(): JsonResponse
 	{
-		//
+		return response()->json($values);
 	}
 
 	/**
@@ -65,7 +65,10 @@ class {{ class }} extends Controller
 	 */
 	public function store({{ storeRequest }} $request): JsonResponse
 	{
-		//
+		return response()->json([
+			'status' => 'success',
+			'message' => 'Data Added',
+		]);
 	}
 
 	/**
@@ -73,7 +76,7 @@ class {{ class }} extends Controller
 	 */
 	public function show({{ model }} ${{ modelVariable }}): JsonResponse
 	{
-		//
+		return response()->json($values);
 	}
 
 	/**
@@ -81,7 +84,10 @@ class {{ class }} extends Controller
 	 */
 	public function update({{ updateRequest }} $request, {{ model }} ${{ modelVariable }}): JsonResponse
 	{
-		//
+		return response()->json([
+			'status' => 'success',
+			'message' => 'Data Updated',
+		]);
 	}
 
 	/**
@@ -89,6 +95,10 @@ class {{ class }} extends Controller
 	 */
 	public function destroy({{ model }} ${{ modelVariable }}): JsonResponse
 	{
-		//
+		${{ modelVariable }}->delete();
+		return response()->json([
+			'status' => 'success',
+			'message' => 'Data Deleted',
+		]);
 	}
 }
