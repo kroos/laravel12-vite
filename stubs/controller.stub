@@ -73,6 +73,10 @@ class {{ class }} extends Controller
 	 */
 	public function store(Request $request): RedirectResponse
 	{
+		$request->validate([
+		],[],[
+		]);
+
 		return redirect()->route('folder.index')->with('success', 'Data Added');
 	}
 
@@ -97,6 +101,10 @@ class {{ class }} extends Controller
 	 */
 	public function update(Request $request, string $id): RedirectResponse
 	{
+		$request->validate([
+		],[],[
+		]);
+
 		return redirect()->route('folder.index')->with('success', 'Data Updated');
 	}
 

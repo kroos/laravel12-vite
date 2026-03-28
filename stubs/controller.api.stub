@@ -28,17 +28,17 @@ use Illuminate\Support\Facades\Bus;
 
 // load email & notification
 use Illuminate\Support\Facades\{
-    Mail, Notification
+	Mail, Notification
 };
 
 // load helper
 use Illuminate\Support\{
-    Arr, Str, Collection, Facades\Storage
+	Arr, Str, Collection, Facades\Storage
 };
 
 // load Carbon library
 use \Carbon\{
-    Carbon, CarbonPeriod, CarbonInterval
+	Carbon, CarbonPeriod, CarbonInterval
 };
 
 use Session;
@@ -61,6 +61,10 @@ class {{ class }} extends Controller
 	 */
 	public function store(Request $request): JsonResponse
 	{
+		$request->validate([
+		],[],[
+		]);
+
 		return response()->json([
 			'status' => 'success',
 			'message' => 'Data Added',
@@ -80,6 +84,10 @@ class {{ class }} extends Controller
 	 */
 	public function update(Request $request, string $id): JsonResponse
 	{
+		$request->validate([
+		],[],[
+		]);
+
 		return response()->json([
 			'status' => 'success',
 			'message' => 'Data Updated',

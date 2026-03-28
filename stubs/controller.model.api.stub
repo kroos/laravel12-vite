@@ -4,9 +4,9 @@ use {{ rootNamespace }}Http\Controllers\Controller;
 
 // for controller output
 use Illuminate\Http\{
-    JsonResponse,
-    RedirectResponse,
-    Response
+	JsonResponse,
+	RedirectResponse,
+	Response
 };
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
@@ -29,17 +29,17 @@ use Illuminate\Support\Facades\Bus;
 
 // load email & notification
 use Illuminate\Support\Facades\{
-    Mail, Notification
+	Mail, Notification
 };
 
 // load helper
 use Illuminate\Support\{
-    Arr, Str, Collection, Facades\Storage
+	Arr, Str, Collection, Facades\Storage
 };
 
 // load Carbon library
 use \Carbon\{
-    Carbon, CarbonPeriod, CarbonInterval
+	Carbon, CarbonPeriod, CarbonInterval
 };
 
 use Session;
@@ -65,6 +65,10 @@ class {{ class }} extends Controller
 	 */
 	public function store({{ storeRequest }} $request): JsonResponse
 	{
+		$request->validate([
+		],[],[
+		]);
+
 		return response()->json([
 			'status' => 'success',
 			'message' => 'Data Added',
@@ -84,6 +88,10 @@ class {{ class }} extends Controller
 	 */
 	public function update({{ updateRequest }} $request, {{ model }} ${{ modelVariable }}): JsonResponse
 	{
+		$request->validate([
+		],[],[
+		]);
+
 		return response()->json([
 			'status' => 'success',
 			'message' => 'Data Updated',
