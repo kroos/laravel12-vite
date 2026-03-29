@@ -58,7 +58,7 @@ class {{ class }} extends Controller
 	 */
 	public function index(): View
 	{
-		return view('folder.index');
+		return view('{{ modelVariable }}.index');
 	}
 
 	/**
@@ -66,7 +66,7 @@ class {{ class }} extends Controller
 	 */
 	public function create(): View
 	{
-		return view('folder.create');
+		return view('{{ modelVariable }}.create');
 	}
 
 	/**
@@ -78,7 +78,11 @@ class {{ class }} extends Controller
 		],[],[
 		]);
 
-		return redirect()->route('folder.index')->with('success', 'Data Added');
+		$result = {{ model }}::create(
+			$request->except('_token')
+		);
+
+		return redirect()->route('{{ modelVariable }}.index')->with('success', 'Data Added');
 	}
 
 	/**
@@ -86,7 +90,7 @@ class {{ class }} extends Controller
 	 */
 	public function show({{ model }} ${{ modelVariable }}): View
 	{
-		return view('folder.show', ['var' => ${{ modelVariable }}]);
+		return view('{{ modelVariable }}.show', ['var' => ${{ modelVariable }}]);
 	}
 
 	/**
@@ -94,7 +98,7 @@ class {{ class }} extends Controller
 	 */
 	public function edit({{ model }} ${{ modelVariable }}): View
 	{
-		return view('folder.edit', ['var' => ${{ modelVariable }}]);
+		return view('{{ modelVariable }}.edit', ['var' => ${{ modelVariable }}]);
 	}
 
 	/**
@@ -106,7 +110,11 @@ class {{ class }} extends Controller
 		],[],[
 		]);
 
-		return redirect()->route('folder.index')->with('success', 'Data Updated');
+		${{ modelVariable }}->update(
+			$request->except('_token', '_method']
+		);
+
+		return redirect()->route('{{ modelVariable }}.index')->with('success', 'Data Updated');
 	}
 
 	/**

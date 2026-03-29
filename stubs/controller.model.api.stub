@@ -57,6 +57,7 @@ class {{ class }} extends Controller
 	 */
 	public function index(): JsonResponse
 	{
+		$values = {{ model }}:: all();
 		return response()->json($values);
 	}
 
@@ -69,6 +70,10 @@ class {{ class }} extends Controller
 		],[],[
 		]);
 
+		$result = {{ model }}::create(
+								$request->except('_token')
+							);
+
 		return response()->json([
 			'status' => 'success',
 			'message' => 'Data Added',
@@ -80,6 +85,7 @@ class {{ class }} extends Controller
 	 */
 	public function show({{ model }} ${{ modelVariable }}): JsonResponse
 	{
+		$values = ${{ modelVariable }}->get();
 		return response()->json($values);
 	}
 
@@ -91,6 +97,10 @@ class {{ class }} extends Controller
 		$request->validate([
 		],[],[
 		]);
+
+		${{ modelVariable }}->update(
+			$request->except('_token')
+		);
 
 		return response()->json([
 			'status' => 'success',
