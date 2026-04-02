@@ -111,7 +111,7 @@ class {{ class }} extends Controller
 		]);
 
 		${{ modelVariable }}->update(
-			$request->except('_token', '_method']
+			$request->except('_token', '_method')
 		);
 
 		return redirect()->route('{{ modelVariable }}.index')->with('success', 'Data Updated');
