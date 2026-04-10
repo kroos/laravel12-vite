@@ -82,6 +82,10 @@ class {{ class }} extends Controller
 			$request->except('_token')
 		);
 
+		$result->hasManyRelationship()->createMany(
+			$request->arrays
+		);
+
 		return redirect()->route('{{ modelVariable }}.index')->with('success', 'Data Added');
 	}
 
@@ -113,6 +117,13 @@ class {{ class }} extends Controller
 		${{ modelVariable }}->update(
 			$request->except('_token', '_method')
 		);
+
+		foreach ($request->arrays as $array) {
+			${{ modelVariable }}->hasManyRelationship()->updateOrCreate(
+				['id' => $array['id'] ?? null],
+				$array
+			);
+		}
 
 		return redirect()->route('{{ modelVariable }}.index')->with('success', 'Data Updated');
 	}
