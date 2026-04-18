@@ -1,6 +1,20 @@
 <?php
 // \Auth::user()->setConnection('mysql3');
 \Auth::user()->belongstostaff->unreadNotifications->markAsRead();
+
+// function imageToBase64($path)
+// {
+// 	if (!file_exists($path)) {
+// 		return null;
+// 	}
+// 	$type = pathinfo($path, PATHINFO_EXTENSION);
+// 	$data = file_get_contents($path);
+// 	return 'data:image/' . $type . ';base64,' . base64_encode($data);
+// }
+
+// $basePath = dirname(base_path()).'\\Storage\\app\\public\\web\\';
+// $bg   = imageToBase64($basePath . 'background.jpg');
+// $logo = imageToBase64($basePath . 'main-logo1.png');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -10,13 +24,32 @@
 	<title>{{ config('app.name', 'Laravel') }}</title>
 	<style>
 		* { margin: 0; padding: 0; box-sizing: border-box; }
-		@page { size: A4; margin: 0; }
+		@page {
+			size: A4;
+			/*margin: 25mm 15mm 20mm 15mm;*/
+			margin: 0;
+		}
 
 		html, body {
 			width: 210mm;
-			height: 297mm;
+			/*height: 297mm; /* causing overflow */*/
 			font-size: 12px;
 			font-family: Arial, sans-serif;
+			/*margin-top: 32mm;*/
+			/*margin-bottom: 20mm;*/
+			/*padding: 0 15mm;*/
+		}
+
+		@font-face {
+			font-family: 'FreestyleScript';
+			src: url("{{ public_path('pdf/FREESCPT.TTF') }}") format('truetype');
+			font-weight: normal;
+			font-style: normal;
+		}
+
+		.ewording {
+			font-family: 'FreestyleScript', cursive;
+			font-size: 28px;
 		}
 
 		/* Background */
@@ -32,7 +65,7 @@
 			width: 100%;
 			height: 100%;
 			object-fit: cover;
-			opacity: 0.15;
+			opacity: 0.25;
 		}
 
 		/* Header */
@@ -77,6 +110,7 @@
 			margin-top: 32mm;
 			margin-bottom: 20mm;
 			padding: 0 15mm;
+			padding-right: 1mm;
 		}
 
 		/* Paragraph styles with font size */
@@ -120,6 +154,7 @@
 			border-collapse: collapse;
 			margin-bottom: 20px;
 			font-size: 14px;
+	    page-break-inside: auto;
 		}
 		th, td {
 			border: 1px solid #ccc;
@@ -131,21 +166,62 @@
 		}
 		tr:nth-child(even) {
 			background-color: #f7f7f7;
+	    page-break-inside: avoid;
 		}
 		.bold { font-weight: bold; }
 		.red { color: red; }
 		.center { text-align: center; }
+
+		/* table-no-border  */
+		.tnb {
+			border-collapse: collapse;
+	    page-break-inside: auto;
+		}
+
+		.tnb th,
+		.tnb td {
+			border: none !important;
+			background: transparent !important;
+			padding: 4px 8px; /* optional, adjust spacing */
+		}
+
+		.tnb tr {
+			background: transparent !important;
+			page-break-inside: avoid;
+		}
+
+		.tnb tr:nth-child(even) {
+			background: transparent !important;
+			page-break-inside: avoid;
+		}
+
+		.tnb td {
+			padding: 2px 6px;
+			vertical-align: top;
+		}
+
+		.page-break {
+			page-break-before: always;
+
+		}
+
+		.after-break {
+			margin-top: 32mm;
+		}
+
+
 	</style>
 </head>
 <body>
 	<!-- Background -->
 	<div class="bg">
-		<img src="{{ public_path('images/background.jpg') }}" alt="background">
+		<img src="{{ public_path('pdf/background.jpg') }}" alt="background">
 	</div>
 
 	<!-- Header -->
 	<div class="header">
-		<img src="{{ public_path('images/logo.png') }}" class="logo">
+		<img src="{{ public_path('pdf\main-logo1.png') }}" class="logo">
+		<br/>
 		@yield('title', 'Document')
 	</div>
 
@@ -157,7 +233,7 @@
 	<!-- Footer -->
 	<div class="footer">
 		<div class="footer-box">
-			&copy; {{ config('app.name', 'Laravel') }} {{ $currentYear }}
+			&copy; {{ config('app.name', 'Laravel') }} {{ now()->format('Y') }}
 		</div>
 	</div>
 </body>
