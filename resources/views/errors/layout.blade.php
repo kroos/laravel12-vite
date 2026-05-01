@@ -1,53 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<?php
+use \Carbon\Carbon;
+$currentYear = Carbon::now()->year;
+?>
 
-        <title>@yield('title')</title>
+<!doctype html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="keywords" content="" />
+	<!-- CSRF Token -->
+	<meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
+	<title>{{ config('app.name', 'Laravel') }}</title>
 
-            .full-height {
-                height: 100vh;
-            }
+	<link href="{{ asset('storage/web/icon2.png') }}" type="image/x-icon" rel="icon" />
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
+	<!-- Styles / Scripts -->
+	@vite(['resources/scss/app.scss', 'resources/css/app.css'])
 
-            .position-ref {
-                position: relative;
-            }
+	<!-- Bootswatch Cerulean CSS -->
+	<link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
+	<!-- Livewire CSS -->
 
-            .content {
-                text-align: center;
-            }
+</head>
+<body class="bg-primary bg-opacity-25 min-vh-100 d-flex flex-column">
 
-            .title {
-                font-size: 36px;
-                padding: 20px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            <div class="content">
-                <div class="title">
-                    @yield('message')
-                </div>
-            </div>
-        </div>
-    </body>
+	<div class="container-fluid flex-fill d-flex flex-column">
+
+		<div class="col-sm-12 mx-auto my-2">
+		</div>
+
+
+		<div class="container-fluid p-1 mx-auto d-flex justify-content-between flex-fill">
+
+			<div class="col-sm-1 m-0 align-self-stretch">
+			</div>
+
+
+			<div class="col-sm-10 m-0 my-2 p-1 align-self-center">
+				@yield('content')
+			</div>
+
+			<div class="col-sm-1 m-0 p-1 align-self-stretch">
+			</div>
+
+		</div>
+
+	</div>
+	<!-- footer -->
+	<div class="container m-0 mx-auto py-1 align-self-end text-center text-sm text-light-emphasis">
+		&copy; {{ config('app.name', 'Laravel') }} {{ $currentYear }}
+	</div>
+</body>
+@vite(['resources/js/app.js'])
 </html>
+
