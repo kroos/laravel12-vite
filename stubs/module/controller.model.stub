@@ -1,0 +1,165 @@
+<?php
+namespace {{ namespace }};
+use App\Http\Controllers\Controller;
+
+// for controller output
+use Illuminate\Http\{
+	JsonResponse,
+	RedirectResponse,
+	Response
+};
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\View\View;
+
+// models
+use App\Models\{
+	{{ modelNamespace }}\{{ class }}
+};
+
+// load request
+use Illuminate\Http\Request;
+use App\Http\Requests\{
+	{{ requestNamespace }}\Store{{ class }}Request,
+	{{ requestNamespace }}\Update{{ class }}Request,
+};
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+
+// resource
+use App\Http\Resources\{{ resourceNamespace }}\{{ class }}Resource;
+
+// load db facade
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
+
+// load batch and queue
+use Illuminate\Bus\Batch;
+use Illuminate\Support\Facades\Bus;
+
+// load email & notification
+use Illuminate\Support\Facades\{
+	Mail, Notification
+};
+
+// load helper
+use Illuminate\Support\{
+	Arr, Str, Collection, Facades\Storage
+};
+
+// load Carbon library
+use \Carbon\{
+	Carbon, CarbonPeriod, CarbonInterval
+};
+
+use Session;
+use Throwable;
+use Exception;
+use Log;
+
+// load pdf
+// use Barryvdh\DomPDF\Facade\Pdf;
+
+class {{ class }} extends Controller
+{
+	/**
+	 * Display a listing of the resource.
+	 */
+	public function index(): View
+	{
+		// return {{ class }}Resource::collection(
+		// 	{{ class }}::paginate()
+		// );
+		return view('{{ variable }}.index');
+	}
+
+	/**
+	 * Show the form for creating a new resource.
+	 */
+	public function create(): View
+	{
+		return view('{{ variable }}.create');
+	}
+
+	/**
+	 * Store a newly created resource in storage.
+	 */
+	public function store(Store{{ class }}Request $request): RedirectResponse
+	{
+		// $item = {{ class }}::create(
+		// 	$request->validated()
+		// );
+
+		// return new {{ class }}Resource($item);
+
+		$result = {{ class }}::create(
+			$request->except('_token')
+		);
+
+		$result->hasManyRelationship()->createMany(
+			$request->arrays
+		);
+
+		return redirect()->route('{{ variable }}.index')->with('success', 'Data Added');
+	}
+
+	/**
+	 * Display the specified resource.
+	 */
+	public function show({{ class }} ${{ variable }}): View
+	{
+		// return new {{ class }}Resource(${{ variable }});
+		return view('{{ variable }}.show', ['var' => ${{ variable }}]);
+	}
+
+	/**
+	 * Show the form for editing the specified resource.
+	 */
+	public function edit({{ class }} ${{ variable }}): View
+	{
+		return view('{{ variable }}.edit', ['var' => ${{ variable }}]);
+	}
+
+	/**
+	 * Update the specified resource in storage.
+	 */
+	public function update(
+		Update{{ class }}Request $request,
+		{{ class }} ${{ variable }}
+	): RedirectResponse
+	{
+		// ${{ variable }}->update(
+		// 	$request->validated()
+		// );
+
+		// return new {{ class }}Resource(${{ variable }});
+
+		${{ variable }}->update(
+			$request->except('_token', '_method')
+		);
+
+		foreach ($request->arrays as $array) {
+			${{ variable }}->hasManyRelationship()->updateOrCreate(
+				['id' => $array['id'] ?? null],
+				$array
+			);
+		}
+
+		return redirect()->route('{{ variable }}.index')->with('success', 'Data Updated');
+	}
+
+	/**
+	 * Remove the specified resource from storage.
+	 */
+	// public function destroy({{ class }} ${{ variable }}): JsonResponse
+	public function destroy({{ class }} ${{ variable }}): JsonResponse
+	{
+		// ${{ variable }}->delete();
+		// return response()->noContent();
+
+		${{ variable }}->delete();
+		return response()->json([
+			'status' => 'success',
+			'message' => 'Data Deleted',
+		]);
+	}
+}
