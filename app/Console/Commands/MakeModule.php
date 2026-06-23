@@ -32,16 +32,35 @@ class MakeModule extends Command
 	{
 		$name = $this->argument('name');
 		$class = class_basename($name);
+
 		$folder = str_replace(
 			'\\',
 			'/',
 			Str::beforeLast($name, '\\')
 		);
 
-		// dd(
-		// 	$this->className($name),
-		// 	$this->folder($name),
-		// );
+		$viewPath = resource_path(
+			'views/' .
+			// Str::lower($folder) .
+			// '/' .
+			// Str::kebab(Str::plural($class))
+			// Str::kebab($class)		// TestProcedures => test-procedures
+			Str::camel($class)		// TestProcedures => testProcedures
+		);
+
+		$modulePath = resource_path(
+			'js/modules/' .
+			// Str::lower($folder) .
+			// '/' .
+			// Str::kebab(Str::plural($class))
+			// Str::kebab($class)		// TestProcedures => test-procedures
+			Str::camel($class)		// TestProcedures => testProcedures
+		);
+
+// dd(
+// $viewPath,
+// $modulePath
+// );
 
 		$this->writeFile(
 			app_path("Models/{$folder}/{$class}.php"),
@@ -50,8 +69,6 @@ class MakeModule extends Command
 				'class' => $class,
 			])
 		);
-
-
 
 		// $this->call('make:model', [
 		// 	'name' => $name,
@@ -80,6 +97,7 @@ class MakeModule extends Command
 			app_path("Http/Requests/{$folder}/Store{$class}Request.php"),
 			$this->buildStub('store-request.stub', [
 				'namespace' => "App\\Http\\Requests\\{$folder}",
+				'namespacemodel' => $folder,
 				'class' => $class,
 			])
 		);
@@ -88,6 +106,7 @@ class MakeModule extends Command
 			app_path("Http/Requests/{$folder}/Update{$class}Request.php"),
 			$this->buildStub('update-request.stub', [
 				'namespace' => "App\\Http\\Requests\\{$folder}",
+				'namespacemodel' => $folder,
 				'class' => $class,
 			])
 		);
@@ -105,15 +124,15 @@ class MakeModule extends Command
 		// 	'--model' => $name
 		// ]);
 
-		$this->writeFile(
-			app_path("Policies/{$folder}/{$class}Policy.php"),
-			$this->buildStub('policy.stub', [
-				'namespace' => "App\\Policies\\{$folder}",
-				'class' => $class,
-				'modelNamespace' => $folder,
-				'variable' => Str::camel($class),
-			])
-		);
+		// $this->writeFile(
+		// 	app_path("Policies/{$folder}/{$class}Policy.php"),
+		// 	$this->buildStub('policy.stub', [
+		// 		'namespace' => "App\\Policies\\{$folder}",
+		// 		'class' => $class,
+		// 		'modelNamespace' => $folder,
+		// 		'variable' => Str::camel($class),
+		// 	])
+		// );
 
 
 
@@ -121,19 +140,91 @@ class MakeModule extends Command
 		// 	'name' => "{$this->className($name)}Resource"
 		// ]);
 
-		$this->writeFile(
-			app_path("Http/Resources/{$folder}/{$class}Resource.php"),
-			$this->buildStub('resource.stub', [
-				'namespace' => "App\\Http\\Resources\\{$folder}",
-				'class' => $class,
-			])
-		);
+		// $this->writeFile(
+		// 	app_path("Http/Resources/{$folder}/{$class}Resource.php"),
+		// 	$this->buildStub('resource.stub', [
+		// 		'namespace' => "App\\Http\\Resources\\{$folder}",
+		// 		'class' => $class,
+		// 	])
+		// );
 
 		$this->call('make:migration', [
 			'name' => 'create_' .
 			Str::snake(Str::pluralStudly($class)) .
 			'_table'
 		]);
+
+		/* View Files */
+		$this->writeFile(
+			"{$viewPath}/index.blade.php",
+			$this->buildStub('views/index.stub', [
+				'class' => $class,
+				'variable' => Str::camel($class),
+			])
+		);
+
+		$this->writeFile(
+			"{$viewPath}/create.blade.php",
+			$this->buildStub('views/create.stub', [
+				'class' => $class,
+				'variable' => Str::camel($class),
+			])
+		);
+
+		$this->writeFile(
+			"{$viewPath}/edit.blade.php",
+			$this->buildStub('views/edit.stub', [
+				'class' => $class,
+				'variable' => Str::camel($class),
+			])
+		);
+
+		$this->writeFile(
+			"{$viewPath}/show.blade.php",
+			$this->buildStub('views/show.stub', [
+				'class' => $class,
+				'variable' => Str::camel($class),
+			])
+		);
+
+		$this->writeFile(
+			"{$viewPath}/_form.blade.php",
+			$this->buildStub('views/_form.stub', [
+				'class' => $class,
+			])
+		);
+
+		$this->writeFile(
+			"{$viewPath}/_js.blade.php",
+			$this->buildStub('views/_js.stub', [
+				'class' => $class,
+				'variable' => Str::camel($class),
+			])
+		);
+
+		/* JS Files */
+		$this->writeFile(
+			"{$modulePath}/index.js",
+			$this->buildStub('js/index.stub', [
+				'class' => $class,
+				'variable' => Str::camel($class),
+			])
+		);
+
+		$this->writeFile(
+			"{$modulePath}/show.js",
+			$this->buildStub('js/show.stub', [
+				'class' => $class,
+				'variable' => Str::camel($class),
+			])
+		);
+
+		$this->writeFile(
+			"{$modulePath}/form.js",
+			$this->buildStub('js/form.stub', [
+				'class' => $class,
+			])
+		);
 
 	}
 

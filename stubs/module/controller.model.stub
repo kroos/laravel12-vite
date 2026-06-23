@@ -59,7 +59,7 @@ use Log;
 // load pdf
 // use Barryvdh\DomPDF\Facade\Pdf;
 
-class {{ class }} extends Controller
+class {{ class }}Controller extends Controller
 {
 	/**
 	 * Display a listing of the resource.

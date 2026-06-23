@@ -1,0 +1,4 @@
+const { route, url, old } = window.data;
+function getError(name) {
+	return errors[name] ? errors[name][0] : null;
+}
