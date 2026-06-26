@@ -14,6 +14,12 @@ const config = {
 		width: '100%',
 	},
 
+	datepicker: {
+		dateFormat: 'yy-mm-dd',
+		changeMonth: true,
+		changeYear: true,
+	},
+
 	datatable: {
 		lengthMenu: [[50, 100, -1], [50, 100, 'All']],
 		columnDefs: [

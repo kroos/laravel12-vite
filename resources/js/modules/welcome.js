@@ -42,7 +42,7 @@ console.log(moment().format('D MMMM YYYY'));
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 $("#dp").jqueryuiDatepicker({
-	dateFormat: 'yy-mm-dd',
+	...config.datepicker
 }).on('change', function(){
 	$('#form').bootstrapValidator('revalidateField', 'datepicker');
 });
